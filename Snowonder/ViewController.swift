@@ -10,6 +10,12 @@ import Cocoa
 
 class ViewController: NSViewController {
     
+    @IBOutlet weak var sortTypeCheckBox: NSButton! {
+        didSet {
+            sortTypeCheckBox.state = Prefs.sortByStringSize ? .on : .off
+        }
+    }
+    
     // MARK: - Constant values
     
     private struct Constant {
@@ -32,7 +38,11 @@ class ViewController: NSViewController {
     }
     
     // MARK: - Action handlers
-    
+
+    @IBAction func sortTypeCheckBoxValueDidChange(_ sender: NSButton) {
+        Prefs.sortByStringSize = sender.state == .on
+    }
+
     @IBAction func enableExtensionButtonAction(_ sender: NSButton) {
         Script(info: Constant.ScriptInfo.openSystemPreferencesExtensions).execute()
     }
@@ -43,7 +53,7 @@ class ViewController: NSViewController {
     
     @IBAction func gitHubButtonAction(_ sender: NSButton) {
         if let url = Constant.URL.gitHub {
-            NSWorkspace.shared().open(url)
+            NSWorkspace.shared.open(url)
         }
     }
 }

@@ -65,7 +65,17 @@ private extension Dictionary where Key == ImportCategory, Value == ImportDeclara
         }
         
         return mapValues { (category, declarations) -> ImportDeclarations in
-            return declarations.sorted { $0.localizedCaseInsensitiveCompare($1) == category.sortingComparisonResult }
+            return declarations.sorted {
+                if Prefs.sortByStringSize {
+                    if $0.count == $1.count {
+                        return $0.localizedCaseInsensitiveCompare($1) == category.sortingComparisonResult
+                    } else {
+                        return ($0.count < $1.count ? .orderedAscending : .orderedDescending) == category.sortingComparisonResult
+                    }
+                } else {
+                    return $0.localizedCaseInsensitiveCompare($1) == category.sortingComparisonResult
+                }
+            }
         }
     }
     

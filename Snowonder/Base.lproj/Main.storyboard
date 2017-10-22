@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13528"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
@@ -623,8 +623,8 @@
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="VwT-WD-YPe"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom" id="R4o-n2-Eq4">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Zoom" keyEquivalent="z" id="R4o-n2-Eq4">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="performZoom:" target="Ady-hI-5gd" id="DIl-cC-cCs"/>
                                             </connections>
@@ -671,6 +671,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="280" height="390"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="R0N-Bs-j7q"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -690,6 +693,18 @@
                         <subviews>
                             <visualEffectView blendingMode="behindWindow" material="mediumLight" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="QPE-VY-5tO">
                                 <rect key="frame" x="0.0" y="0.0" width="280" height="390"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PuX-Xj-bIW">
+                                        <rect key="frame" x="89" y="52" width="103" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Sort by String Size" bezelStyle="regularSquare" imagePosition="left" inset="2" id="TFC-OZ-LOZ">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="systemLight" size="9"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="sortTypeCheckBoxValueDidChange:" target="XfG-lQ-9wD" id="n1q-Nv-C3v"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                             </visualEffectView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YKU-17-6TL">
                                 <rect key="frame" x="20" y="130" width="240" height="240"/>
@@ -699,8 +714,8 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="LogoSnowonder" id="70h-kq-OvL"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wwW-1x-Qv7">
-                                <rect key="frame" x="58" y="84" width="164" height="36"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wwW-1x-Qv7">
+                                <rect key="frame" x="60" y="84" width="160" height="36"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Snowonder" id="XYw-c8-pcA">
                                     <font key="font" metaFont="systemMedium" size="30"/>
                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -724,7 +739,7 @@
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9EO-JX-vd5">
                                 <rect key="frame" x="46" y="13" width="188" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="176" id="Bkl-IR-RK5"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="176" id="Bkl-IR-RK5"/>
                                     <constraint firstAttribute="height" constant="24" id="fEv-S7-i2P"/>
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="Enable Extension" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u3w-VF-QSS">
@@ -746,11 +761,16 @@
                             <constraint firstItem="1Eo-33-lyy" firstAttribute="leading" secondItem="9EO-JX-vd5" secondAttribute="trailing" constant="10" id="PaG-Uf-gW1"/>
                             <constraint firstAttribute="bottom" secondItem="9EO-JX-vd5" secondAttribute="bottom" constant="20" id="U9X-Dg-D6t"/>
                             <constraint firstItem="wwW-1x-Qv7" firstAttribute="centerX" secondItem="YKU-17-6TL" secondAttribute="centerX" id="Xcg-vm-g9A"/>
+                            <constraint firstItem="9EO-JX-vd5" firstAttribute="top" secondItem="PuX-Xj-bIW" secondAttribute="bottom" constant="10" id="ZQN-V4-gbO"/>
                             <constraint firstItem="9EO-JX-vd5" firstAttribute="centerY" secondItem="1Eo-33-lyy" secondAttribute="centerY" id="atR-2Q-SoZ"/>
                             <constraint firstAttribute="bottom" secondItem="QPE-VY-5tO" secondAttribute="bottom" id="atW-CF-KQk"/>
+                            <constraint firstItem="PuX-Xj-bIW" firstAttribute="centerX" secondItem="9EO-JX-vd5" secondAttribute="centerX" id="bGp-Sw-FHI"/>
                             <constraint firstItem="YKU-17-6TL" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="kbN-ZG-PgK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="sortTypeCheckBox" destination="PuX-Xj-bIW" id="Gk2-UG-0MV"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
